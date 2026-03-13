@@ -4,434 +4,732 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Visual Flares Studios | Salmon Arm Web Design</title>
-    
-    <!-- Tailwind CSS -->
-    <script src="https://cdn.tailwindcss.com"></script>
-    
+    <meta name="description" content="Visual Flares Studios — Professional web design, e-commerce, AI video ads & SEO based in Salmon Arm, BC.">
+
+    <!-- Preload logo for instant display -->
+    <link rel="preload" href="logo.png" as="image" type="image/png">
+
     <!-- Google Fonts -->
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@300;400;600;800&family=Orbitron:wght@400;700&display=swap" rel="stylesheet">
-    
+    <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@300;400;600;700;800&family=Orbitron:wght@400;700;900&display=swap" rel="stylesheet">
+
     <!-- Icons -->
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
 
-    <script>
-        tailwind.config = {
-            theme: {
-                extend: {
-                    fontFamily: {
-                        sans: ['Montserrat', 'sans-serif'],
-                        display: ['Orbitron', 'sans-serif'],
-                    },
-                    colors: {
-                        flare: {
-                            50: '#fff7ed',
-                            100: '#ffedd5',
-                            500: '#f59e0b', // Amber/Orange to match the black hole
-                            600: '#d97706',
-                            900: '#78350f',
-                        },
-                        glass: 'rgba(0, 0, 0, 0.7)',
-                        glassBorder: 'rgba(255, 255, 255, 0.1)',
-                    },
-                    animation: {
-                        'float': 'float 6s ease-in-out infinite',
-                        'pulse-slow': 'pulse 4s cubic-bezier(0.4, 0, 0.6, 1) infinite',
-                    },
-                    keyframes: {
-                        float: {
-                            '0%, 100%': { transform: 'translateY(0)' },
-                            '50%': { transform: 'translateY(-10px)' },
-                        }
-                    }
-                }
-            }
-        }
-    </script>
-
     <style>
-        /* Custom Styles & Utilities */
-        body, html {
-            margin: 0;
-            padding: 0;
-            overflow-x: hidden;
-            background-color: transparent; /* FIXED: Made transparent so the fixed-bg behind it is visible */
-            color: #ffffff;
-        }
+    /* ═══════════════════════════════════════
+       RESET & BASE
+    ═══════════════════════════════════════ */
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
 
-        /* Background Image Handling */
-        .fixed-bg {
-            position: fixed;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
-            z-index: -2;
-            background-color: #050505; /* Fallback color is now here */
-            
-            /* IMPORTANT FOR YOU: 
-               Currently using an online placeholder so you can see the preview here.
-               When you save this file, you can change this line to: 
-               background-image: url('bground.jpeg'); 
-            */
-            background-image: url('https://images.unsplash.com/photo-1462331940025-496dfbfc7564?q=80&w=2011&auto=format&fit=crop');
-            
-            background-size: cover;
-            background-position: center;
-            background-repeat: no-repeat;
-        }
+    :root {
+        --bg:       #1d1d1f;   /* greyish-black, brushed graphite */
+        --bg-card:  #252527;
+        --bg-deep:  #141416;
+        --border:   #333336;
+        --amber:    #f59e0b;
+        --amber-d:  #d97706;
+        --text:     #e8e8ea;
+        --muted:    #6b6b6e;
+    }
 
-        /* The Blur Layer */
-        .blur-overlay {
-            position: fixed;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
-            z-index: -1;
-            background: rgba(0, 0, 0, 0.65); /* Darken for readability */
-            backdrop-filter: blur(12px); /* Heavy blur as requested */
-            -webkit-backdrop-filter: blur(12px);
-        }
+    html { scroll-behavior: smooth; }
 
-        /* Flare Animation for Clicks */
-        .click-flare {
-            position: absolute;
-            border-radius: 50%;
-            background: radial-gradient(circle, rgba(245, 158, 11, 1) 0%, rgba(245, 158, 11, 0) 70%);
-            transform: translate(-50%, -50%) scale(0);
-            pointer-events: none;
-            z-index: 9999;
-            animation: flare-burst 0.6s ease-out forwards;
-            box-shadow: 0 0 20px rgba(245, 158, 11, 0.8);
-        }
+    body {
+        background: var(--bg);
+        color: var(--text);
+        font-family: 'Montserrat', sans-serif;
+        -webkit-font-smoothing: antialiased;
+        overflow-x: hidden;
+    }
 
-        @keyframes flare-burst {
-            0% {
-                transform: translate(-50%, -50%) scale(0);
-                opacity: 1;
-            }
-            100% {
-                transform: translate(-50%, -50%) scale(2.5);
-                opacity: 0;
-            }
-        }
+    /* ═══════════════════════════════════════
+       PROMO BANNER
+    ═══════════════════════════════════════ */
+    #promo-banner {
+        display: block;
+        text-decoration: none;
+        background: linear-gradient(90deg, #92400e, #d97706 35%, #f59e0b 55%, #d97706 80%, #92400e);
+        background-size: 300% 100%;
+        animation: banner-scroll 5s linear infinite;
+    }
+    #promo-banner:hover { filter: brightness(1.08); }
+    @keyframes banner-scroll {
+        0%   { background-position: 100% 0; }
+        100% { background-position: -200% 0; }
+    }
+    .banner-text {
+        max-width: 1280px; margin: 0 auto;
+        padding: .5rem 1.25rem;
+        text-align: center;
+        font-size: .78rem; font-weight: 700;
+        color: #000; letter-spacing: .02em; line-height: 1.5;
+    }
+    .banner-text strong { font-weight: 900; }
+    .banner-text .learn { text-decoration: underline; }
+    .banner-sub { font-size: .56rem; color: rgba(0,0,0,.45); display: block; margin-top: .15rem; }
 
-        /* Glass Cards */
-        .glass-card {
-            background: rgba(20, 20, 20, 0.6);
-            backdrop-filter: blur(10px);
-            -webkit-backdrop-filter: blur(10px);
-            border: 1px solid rgba(255, 255, 255, 0.1);
-            transition: transform 0.3s ease, box-shadow 0.3s ease, border-color 0.3s ease;
-        }
+    /* ═══════════════════════════════════════
+       FIXED TOP-BAR WRAPPER
+    ═══════════════════════════════════════ */
+    #top-bar {
+        position: fixed;
+        top: 0; left: 0; right: 0;
+        z-index: 50;
+    }
 
-        .glass-card:hover {
-            transform: translateY(-5px);
-            box-shadow: 0 10px 30px -10px rgba(245, 158, 11, 0.3);
-            border-color: rgba(245, 158, 11, 0.5);
-        }
+    /* ═══════════════════════════════════════
+       NAVBAR
+    ═══════════════════════════════════════ */
+    #navbar {
+        background: rgba(20, 20, 22, 0.97);
+        border-bottom: 1px solid var(--border);
+        backdrop-filter: blur(10px);
+        -webkit-backdrop-filter: blur(10px);
+    }
+    .nav-inner {
+        max-width: 1280px; margin: 0 auto;
+        padding: 0 1.5rem;
+        height: 60px;
+        display: flex;
+        flex-direction: row;      /* explicit: single horizontal row */
+        align-items: center;      /* vertical centre */
+        justify-content: space-between;
+    }
 
-        /* Scroll Reveal Utility */
-        .reveal {
-            opacity: 0;
-            transform: translateY(30px);
-            transition: all 0.8s ease-out;
-        }
-        .reveal.active {
-            opacity: 1;
-            transform: translateY(0);
-        }
+    /* ── LOGO LOCKUP — THE KEY FIX ────────
+       Both the <img> and the brand name text
+       live inside one flex row, centred.     */
+    .logo-lockup {
+        display: flex;
+        flex-direction: row;
+        align-items: center;   /* vertically centre logo img to text */
+        gap: 10px;
+        text-decoration: none;
+        flex-shrink: 0;
+    }
+    .logo-lockup img {
+        display: block;        /* removes the inline baseline gap */
+        height: 32px;
+        width: auto;
+        object-fit: contain;
+        flex-shrink: 0;
+        border-radius: 4px;
+    }
+    .brand-name {
+        font-family: 'Orbitron', sans-serif;
+        font-size: 1rem;
+        font-weight: 700;
+        color: #fff;
+        letter-spacing: .1em;
+        text-transform: uppercase;
+        white-space: nowrap;
+        line-height: 1;        /* stops font metrics inflating height */
+    }
+    .brand-name .hl { color: var(--amber); }
 
-        /* Specific Highlight Text */
-        .text-glow {
-            text-shadow: 0 0 10px rgba(245, 158, 11, 0.5);
-        }
+    @media (max-width: 360px) {
+        .logo-lockup img { height: 26px; }
+        .brand-name      { font-size: .8rem; }
+    }
+
+    /* ── DESKTOP NAV ─────────────────────── */
+    #desktop-nav { display: none; }
+    @media (min-width: 768px) {
+        #desktop-nav   { display: flex; align-items: center; gap: 2rem; }
+        #hamburger-btn { display: none !important; }
+    }
+    .nav-link {
+        font-size: .8rem; font-weight: 600; letter-spacing: .04em;
+        color: #a0a0a3; text-decoration: none;
+        transition: color .18s;
+    }
+    .nav-link:hover { color: var(--amber); }
+
+    /* ── HAMBURGER ───────────────────────── */
+    #hamburger-btn {
+        background: none; border: none; color: #fff;
+        font-size: 1.25rem; padding: .45rem; cursor: pointer;
+        display: flex; align-items: center; line-height: 1;
+    }
+
+    /* ── MOBILE DROPDOWN ─────────────────── */
+    #mobile-menu {
+        display: none;
+        background: #141416;
+        border-top: 1px solid var(--border);
+    }
+    #mobile-menu.open { display: block; }
+    .mob-link {
+        display: block; padding: .8rem 1.5rem;
+        font-size: .88rem; font-weight: 600;
+        color: #a0a0a3; text-decoration: none;
+        border-bottom: 1px solid var(--border);
+        transition: color .18s, background .18s;
+    }
+    .mob-link:hover { color: var(--amber); background: rgba(245,158,11,.04); }
+
+    /* ═══════════════════════════════════════
+       BUTTONS
+    ═══════════════════════════════════════ */
+    .btn-amber {
+        display: inline-flex; align-items: center; gap: .5rem;
+        padding: .65rem 1.4rem;
+        background: var(--amber-d); color: #fff;
+        border-radius: 9999px; font-weight: 700; font-size: .82rem;
+        text-decoration: none;
+        transition: background .2s, transform .2s, box-shadow .2s;
+        white-space: nowrap;
+    }
+    .btn-amber:hover { background: var(--amber); transform: translateY(-2px); box-shadow: 0 5px 16px rgba(245,158,11,.35); }
+
+    .btn-wa {
+        display: inline-flex; align-items: center; gap: .6rem;
+        padding: .9rem 1.9rem;
+        background: #25d366; color: #fff;
+        border-radius: 9999px; font-weight: 700; font-size: .9rem;
+        text-decoration: none; white-space: nowrap;
+        box-shadow: 0 4px 18px rgba(37,211,102,.2);
+        transition: background .2s, transform .2s, box-shadow .2s;
+    }
+    .btn-wa:hover { background: #1cb857; transform: translateY(-2px); box-shadow: 0 8px 24px rgba(37,211,102,.35); }
+
+    .btn-email {
+        display: inline-flex; align-items: center; gap: .6rem;
+        padding: .9rem 1.9rem;
+        background: transparent; color: var(--text);
+        border: 1.5px solid rgba(255,255,255,.22);
+        border-radius: 9999px; font-weight: 700; font-size: .9rem;
+        text-decoration: none; white-space: nowrap;
+        transition: background .2s, border-color .2s, transform .2s;
+    }
+    .btn-email:hover { background: rgba(255,255,255,.06); border-color: rgba(255,255,255,.45); transform: translateY(-2px); }
+
+    .btn-ghost {
+        display: inline-flex; align-items: center; gap: .5rem;
+        padding: .75rem 1.7rem;
+        border: 1.5px solid rgba(255,255,255,.18); color: #9a9a9d;
+        border-radius: 9999px; font-weight: 700; font-size: .82rem;
+        text-decoration: none;
+        transition: background .2s, border-color .2s, color .2s;
+    }
+    .btn-ghost:hover { background: rgba(255,255,255,.06); border-color: rgba(255,255,255,.4); color: #fff; }
+
+    /* ═══════════════════════════════════════
+       HERO
+    ═══════════════════════════════════════ */
+    .hero {
+        min-height: 100vh;
+        display: flex; align-items: center; justify-content: center;
+        text-align: center;
+        padding: 3rem 1.25rem 5rem;
+        position: relative; overflow: hidden;
+    }
+    /* Amber glow blob */
+    .hero::before {
+        content: '';
+        position: absolute; top: 42%; left: 50%;
+        transform: translate(-50%, -50%);
+        width: min(900px, 120vw); height: 600px;
+        background: radial-gradient(ellipse at center,
+            rgba(245,158,11,.07) 0%, rgba(245,158,11,.03) 40%, transparent 70%);
+        pointer-events: none;
+    }
+    /* Dot-grid texture */
+    .hero::after {
+        content: '';
+        position: absolute; inset: 0;
+        background-image: radial-gradient(circle, rgba(255,255,255,.028) 1px, transparent 1px);
+        background-size: 28px 28px;
+        pointer-events: none;
+    }
+    /* Top accent line */
+    .hero-accent-line {
+        position: absolute; top: 0; left: 0; right: 0; height: 1px;
+        background: linear-gradient(90deg, transparent, rgba(245,158,11,.4) 50%, transparent);
+    }
+    .hero-inner { position: relative; z-index: 2; max-width: 800px; margin: 0 auto; }
+
+    .hero-badge {
+        display: inline-block;
+        padding: .28rem 1.1rem;
+        border: 1px solid rgba(245,158,11,.3); border-radius: 9999px;
+        font-size: .68rem; font-weight: 700; letter-spacing: .12em; text-transform: uppercase;
+        color: var(--amber); background: rgba(245,158,11,.06);
+        margin-bottom: 1.6rem;
+    }
+
+    .hero-title {
+        font-family: 'Orbitron', sans-serif;
+        font-size: clamp(2.6rem, 8.5vw, 5.5rem);
+        font-weight: 900; line-height: 1.06; color: #fff;
+        text-shadow: 0 0 60px rgba(245,158,11,.2), 0 0 120px rgba(245,158,11,.07);
+        margin-bottom: 1.4rem;
+    }
+    .hero-title .grad {
+        background: linear-gradient(105deg, #fb923c 0%, #f59e0b 45%, #fcd34d 100%);
+        -webkit-background-clip: text; -webkit-text-fill-color: transparent; background-clip: text;
+    }
+
+    .hero-sub {
+        font-size: clamp(.88rem, 2.2vw, 1.1rem); color: var(--muted);
+        max-width: 500px; margin: 0 auto 2.6rem;
+        font-weight: 300; line-height: 1.85;
+    }
+
+    .hero-cta { display: flex; flex-wrap: wrap; gap: .9rem; justify-content: center; align-items: center; }
+
+    /* Scroll cue */
+    .scroll-cue {
+        position: absolute; bottom: 2rem; left: 50%; color: #3a3a3d;
+        font-size: .9rem; animation: cue 2.2s ease-in-out infinite;
+    }
+    @keyframes cue {
+        0%, 100% { transform: translateX(-50%) translateY(0); }
+        50%       { transform: translateX(-50%) translateY(6px); }
+    }
+
+    /* ═══════════════════════════════════════
+       STATS STRIP
+    ═══════════════════════════════════════ */
+    .stats-strip { border-top: 1px solid var(--border); border-bottom: 1px solid var(--border); background: var(--bg-deep); }
+    .stats-grid {
+        max-width: 1280px; margin: 0 auto;
+        padding: 1.6rem 1.25rem;
+        display: grid; grid-template-columns: repeat(auto-fit, minmax(120px, 1fr));
+        gap: 1rem; text-align: center;
+    }
+    .stat-num { font-family: 'Orbitron', sans-serif; font-size: 1.6rem; font-weight: 700; color: var(--amber); line-height: 1; }
+    .stat-label { font-size: .62rem; color: var(--muted); margin-top: .4rem; text-transform: uppercase; letter-spacing: .08em; }
+
+    /* ═══════════════════════════════════════
+       LAYOUT UTILS
+    ═══════════════════════════════════════ */
+    .s-divider { height: 1px; background: linear-gradient(90deg, transparent, var(--border) 25%, var(--border) 75%, transparent); }
+    .section { padding: 5.5rem 1.25rem; }
+    .section-inner { max-width: 1280px; margin: 0 auto; }
+    .section-label { font-size: .65rem; font-weight: 700; letter-spacing: .15em; color: var(--amber); text-transform: uppercase; margin-bottom: .55rem; }
+    .section-title { font-family: 'Orbitron', sans-serif; font-size: clamp(1.6rem, 4vw, 2.4rem); font-weight: 700; color: #fff; margin-bottom: .9rem; }
+    .accent-bar { height: 3px; width: 50px; background: var(--amber); border-radius: 4px; margin: 0 auto; }
+
+    /* ═══════════════════════════════════════
+       MAT CARD
+    ═══════════════════════════════════════ */
+    .mat-card {
+        background: var(--bg-card); border: 1px solid var(--border); border-radius: 1rem;
+        transition: transform .25s ease, box-shadow .25s ease, border-color .25s ease, background .25s ease;
+    }
+    .mat-card:hover { transform: translateY(-4px); background: #2a2a2c; box-shadow: 0 14px 32px -8px rgba(245,158,11,.14); border-color: rgba(245,158,11,.3); }
+
+    .icon-wrap {
+        display: inline-flex; align-items: center; justify-content: center;
+        width: 48px; height: 48px; border-radius: 50%;
+        background: rgba(245,158,11,.08); border: 1px solid rgba(245,158,11,.18);
+        color: var(--amber); font-size: 1.1rem; margin-bottom: .9rem;
+    }
+
+    /* ═══════════════════════════════════════
+       SERVICES
+    ═══════════════════════════════════════ */
+    .services-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(220px, 1fr)); gap: 1.4rem; margin-top: 3rem; }
+    .service-card { padding: 1.9rem; }
+    .service-title { font-weight: 700; font-size: .95rem; color: var(--amber); margin-bottom: .5rem; }
+    .service-desc  { color: #707074; font-size: .81rem; line-height: 1.72; margin-bottom: 1rem; }
+    .service-list  { list-style: none; font-size: .77rem; color: #9a9a9d; display: flex; flex-direction: column; gap: .4rem; }
+    .service-list li::before { content: ''; display: inline-block; width: 6px; height: 6px; border-radius: 50%; background: var(--amber); margin-right: .5rem; vertical-align: middle; }
+
+    /* ═══════════════════════════════════════
+       WHY US
+    ═══════════════════════════════════════ */
+    .why-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(180px, 1fr)); gap: 2.5rem; margin-top: 3rem; text-align: center; }
+    .why-icon  { font-size: 2rem; color: var(--amber); margin-bottom: .75rem; }
+    .why-title { font-weight: 700; font-size: .9rem; color: #e0e0e2; margin-bottom: .45rem; }
+    .why-body  { font-size: .79rem; color: var(--muted); line-height: 1.65; }
+
+    /* ═══════════════════════════════════════
+       CTA BLOCK
+    ═══════════════════════════════════════ */
+    .cta-card {
+        max-width: 640px; margin: 0 auto;
+        padding: 3.2rem 2.2rem; text-align: center;
+        border-color: rgba(245,158,11,.16) !important;
+        background: linear-gradient(135deg, #222224 0%, #282828 100%) !important;
+    }
+    .cta-emoji { font-size: 2rem; margin-bottom: .9rem; line-height: 1; }
+    .cta-title { font-family: 'Orbitron', sans-serif; font-size: clamp(1.3rem, 3.5vw, 1.85rem); font-weight: 700; color: #fff; margin-bottom: .75rem; }
+    .cta-body  { color: var(--muted); font-size: .87rem; line-height: 1.75; margin-bottom: 2.2rem; }
+
+    /* ═══════════════════════════════════════
+       FOOTER
+    ═══════════════════════════════════════ */
+    footer { border-top: 1px solid var(--border); background: var(--bg-deep); padding: 2.2rem 1.25rem; }
+    .footer-inner { max-width: 1280px; margin: 0 auto; display: flex; flex-direction: column; align-items: center; gap: .85rem; text-align: center; }
+    .footer-copy { font-size: .73rem; color: #484848; }
+    .footer-made { font-size: .68rem; color: #363638; }
+
+    /* ═══════════════════════════════════════
+       SCROLL REVEAL
+    ═══════════════════════════════════════ */
+    .reveal { opacity: 0; transform: translateY(18px); transition: opacity .65s ease, transform .65s ease; }
+    .reveal.active { opacity: 1; transform: translateY(0); }
+
+    /* ═══════════════════════════════════════
+       CLICK FLARE
+    ═══════════════════════════════════════ */
+    .click-flare {
+        position: fixed; pointer-events: none; z-index: 9999;
+        border-radius: 50%; width: 56px; height: 56px;
+        background: radial-gradient(circle, rgba(245,158,11,.8) 0%, transparent 70%);
+        transform: translate(-50%,-50%) scale(0);
+        animation: flare .55s ease-out forwards;
+    }
+    @keyframes flare {
+        0%   { transform: translate(-50%,-50%) scale(0); opacity: 1; }
+        100% { transform: translate(-50%,-50%) scale(3.2); opacity: 0; }
+    }
     </style>
 </head>
-<body class="antialiased selection:bg-flare-500 selection:text-black">
+<body>
 
-    <!-- Background Elements -->
-    <div class="fixed-bg"></div>
-    <div class="blur-overlay"></div>
+<!-- ═══════════════════════════════
+     TOP BAR (fixed)
+═══════════════════════════════ -->
+<div id="top-bar">
 
-    <!-- Navigation -->
-    <nav class="fixed w-full z-50 top-0 transition-all duration-300 p-4" id="navbar">
-        <div class="max-w-7xl mx-auto flex justify-between items-center glass-card rounded-full px-6 py-3">
-            <a href="#" class="text-2xl font-display font-bold text-white tracking-widest uppercase">
-                Visual<span class="text-flare-500">Flares</span>
+    <!-- Promo banner -->
+    <a id="promo-banner" href="Contact/index.html">
+        <div class="banner-text">
+            🔥 LIMITED TIME — Pick Your Own Price! Monthly maintenance from just <strong>$10/mo</strong>. Act fast!
+            <span class="learn">Learn More →</span>
+            <span class="banner-sub">*Terms &amp; conditions apply. Limited availability.</span>
+        </div>
+    </a>
+
+    <!-- Navbar -->
+    <nav id="navbar">
+        <div class="nav-inner">
+
+            <!-- LOGO LOCKUP: img + brand text in one flex row -->
+            <a href="index.html" class="logo-lockup">
+                <img src="logo.png" alt="Visual Flares Studios logo">
+                <span class="brand-name">Visual<span class="hl">Flares</span></span>
             </a>
-            <div class="hidden md:flex space-x-8 text-sm font-semibold tracking-wide">
-                <a href="#services" class="hover:text-flare-500 transition-colors">Services</a>
-                <a href="#pricing" class="hover:text-flare-500 transition-colors">Pricing</a>
-                <a href="#about" class="hover:text-flare-500 transition-colors">About</a>
-                <a href="#contact" class="bg-flare-600 hover:bg-flare-500 text-white px-5 py-2 rounded-full transition-all transform hover:scale-105 shadow-lg shadow-flare-900/50">
-                    Let's Talk
-                </a>
+
+            <!-- Desktop links -->
+            <div id="desktop-nav">
+                <a href="Services/index.html" class="nav-link">Services</a>
+                <a href="Pricing/index.html"  class="nav-link">Pricing</a>
+                <a href="About/index.html"    class="nav-link">About</a>
+                <a href="Contact/index.html"  class="btn-amber">Let's Talk</a>
             </div>
-            <!-- Mobile Menu Button -->
-            <button class="md:hidden text-white text-xl hover:text-flare-500 transition-colors">
-                <i class="fa-solid fa-bars"></i>
+
+            <!-- Hamburger (mobile only) -->
+            <button id="hamburger-btn" aria-label="Toggle menu" aria-expanded="false" aria-controls="mobile-menu">
+                <i class="fa-solid fa-bars" id="menu-icon"></i>
             </button>
+        </div>
+
+        <!-- Mobile dropdown -->
+        <div id="mobile-menu">
+            <div style="max-width:1280px; margin:0 auto;">
+                <a href="Services/index.html" class="mob-link">Services</a>
+                <a href="Pricing/index.html"  class="mob-link">Pricing</a>
+                <a href="About/index.html"    class="mob-link">About</a>
+                <div style="padding:.85rem 1.5rem;">
+                    <a href="Contact/index.html" class="btn-amber" style="width:100%; justify-content:center; padding:.85rem;">
+                        Let's Talk
+                    </a>
+                </div>
+            </div>
         </div>
     </nav>
 
-    <!-- Hero Section -->
-    <header class="relative min-h-screen flex items-center justify-center text-center px-4 pt-20">
-        <div class="max-w-4xl mx-auto z-10 space-y-8">
-            <div class="inline-block animate-float">
-                <span class="py-1 px-3 border border-flare-500/50 rounded-full text-xs font-semibold tracking-wider text-flare-500 bg-black/50 backdrop-blur-md uppercase mb-4">
-                    Based in Salmon Arm, BC
-                </span>
+</div>
+<!-- JS-matched spacer so body content clears the fixed bar -->
+<div id="top-spacer"></div>
+
+
+<!-- ═══════════════════════════════
+     HERO
+═══════════════════════════════ -->
+<header class="hero">
+    <div class="hero-accent-line"></div>
+
+    <div class="hero-inner">
+
+        <div class="reveal" style="margin-bottom:1.5rem;">
+            <span class="hero-badge">📍 Based in Salmon Arm, BC</span>
+        </div>
+
+        <h1 class="hero-title reveal" style="transition-delay:.06s;">
+            IGNITE YOUR<br>
+            <span class="grad">DIGITAL PRESENCE</span>
+        </h1>
+
+        <p class="hero-sub reveal" style="transition-delay:.12s;">
+            We craft fast, mobile-first websites with personality —
+            so your business stands out and gets found.
+        </p>
+
+        <!-- TWO CTA BUTTONS -->
+        <div class="hero-cta reveal" style="transition-delay:.2s;">
+
+            <!-- 1. WhatsApp — prefilled to +17785944591 -->
+            <a class="btn-wa"
+               href="https://wa.me/17785944591?text=Hi%20Visual%20Flares%20Studios!%20%F0%9F%91%8B%20I%20found%20your%20website%20and%20I%27m%20interested%20in%20your%20services.%20Can%20we%20chat%20about%20my%20project%3F">
+                <i class="fa-brands fa-whatsapp" style="font-size:1.15rem;"></i>
+                Say Hi on WhatsApp
+            </a>
+
+            <!-- 2. Email — prefilled to support@visualflares.ca -->
+            <a class="btn-email"
+               href="mailto:support@visualflares.ca?subject=New%20Website%20Query&body=Hello%20Visual%20Flares%20Studios%20Team%2C%0A%0AI%20came%20across%20your%20website%20and%20I%27d%20love%20to%20learn%20more%20about%20your%20services.%0A%0A%E2%80%94%20MY%20DETAILS%20%E2%80%94%0AName%3A%20%0ABusiness%20Name%3A%20%0APhone%20Number%3A%20%0ACity%20%2F%20Town%3A%20%0A%0A%E2%80%94%20WHAT%20I%27M%20LOOKING%20FOR%20%E2%80%94%0A%5BDescribe%20your%20project%20or%20what%20you%20need%20help%20with%5D%0A%0A%E2%80%94%20BUDGET%20RANGE%20%E2%80%94%0A%5BYour%20estimated%20budget%5D%0A%0A%E2%80%94%20BEST%20TIME%20TO%20REACH%20ME%20%E2%80%94%0A%5Be.g.%20Weekday%20mornings%2C%20evenings%5D%0A%0ALooking%20forward%20to%20hearing%20from%20you%21%0A%0AKind%20regards">
+                <i class="fa-solid fa-envelope" style="font-size:.9rem;"></i>
+                Send Us an Email
+            </a>
+
+        </div>
+
+    </div>
+
+    <div class="scroll-cue">
+        <i class="fa-solid fa-chevron-down"></i>
+    </div>
+</header>
+
+
+<!-- ═══════════════════════════════
+     STATS STRIP
+═══════════════════════════════ -->
+<div class="stats-strip">
+    <div class="stats-grid">
+        <div class="reveal">
+            <div class="stat-num">$67</div>
+            <div class="stat-label">Starting Price</div>
+        </div>
+        <div class="reveal" style="transition-delay:60ms;">
+            <div class="stat-num">48h</div>
+            <div class="stat-label">First Draft</div>
+        </div>
+        <div class="reveal" style="transition-delay:120ms;">
+            <div class="stat-num">100%</div>
+            <div class="stat-label">Mobile Ready</div>
+        </div>
+        <div class="reveal" style="transition-delay:180ms;">
+            <div class="stat-num">Local</div>
+            <div class="stat-label">Salmon Arm, BC</div>
+        </div>
+    </div>
+</div>
+
+
+<!-- ═══════════════════════════════
+     SERVICES
+═══════════════════════════════ -->
+<section class="section">
+    <div class="section-inner">
+
+        <div class="reveal" style="text-align:center; margin-bottom:3.5rem;">
+            <p class="section-label">What We Do</p>
+            <h2 class="section-title">Core Services</h2>
+            <div class="accent-bar"></div>
+        </div>
+
+        <div class="services-grid">
+
+            <div class="mat-card service-card reveal">
+                <div class="icon-wrap"><i class="fa-solid fa-laptop-code"></i></div>
+                <div class="service-title">Web Design</div>
+                <p class="service-desc">Custom, responsive pages built to reflect your brand and turn visitors into customers.</p>
+                <ul class="service-list">
+                    <li>Mobile-first design</li>
+                    <li>Lightning fast load</li>
+                    <li>Custom branding</li>
+                </ul>
             </div>
-            <h1 class="text-5xl md:text-7xl lg:text-8xl font-display font-bold leading-tight tracking-tight text-glow">
-                IGNITE YOUR <br>
-                <span class="text-transparent bg-clip-text bg-gradient-to-r from-orange-400 via-flare-500 to-red-500">DIGITAL PRESENCE</span>
-            </h1>
-            <p class="text-lg md:text-xl text-gray-300 max-w-2xl mx-auto font-light leading-relaxed">
-                We build websites with personality. Fast, mobile-friendly, and designed to capture attention. 
-                Experience the flare.
+
+            <div class="mat-card service-card reveal" style="transition-delay:80ms;">
+                <div class="icon-wrap"><i class="fa-solid fa-store"></i></div>
+                <div class="service-title">E-Commerce</div>
+                <p class="service-desc">Full online store ready to sell — products, cart, checkout and payments all set up for you.</p>
+                <ul class="service-list">
+                    <li>Secure payments</li>
+                    <li>Product catalogue</li>
+                    <li>Order management</li>
+                </ul>
+            </div>
+
+            <div class="mat-card service-card reveal" style="transition-delay:160ms;">
+                <div class="icon-wrap"><i class="fa-solid fa-video"></i></div>
+                <div class="service-title">AI Video Ads</div>
+                <p class="service-desc">Eye-catching video ads made with cutting-edge AI, perfect for social media and Google Ads.</p>
+                <ul class="service-list">
+                    <li>Script &amp; voiceover</li>
+                    <li>Branded visuals</li>
+                    <li>Social-ready HD</li>
+                </ul>
+            </div>
+
+            <div class="mat-card service-card reveal" style="transition-delay:240ms;">
+                <div class="icon-wrap"><i class="fa-solid fa-magnifying-glass-chart"></i></div>
+                <div class="service-title">SEO Setup</div>
+                <p class="service-desc">Get found on Google. We handle all technical on-page SEO to boost your local ranking.</p>
+                <ul class="service-list">
+                    <li>Keyword mapping</li>
+                    <li>Google Business</li>
+                    <li>Speed audit</li>
+                </ul>
+            </div>
+
+        </div>
+
+        <div class="reveal" style="text-align:center; margin-top:2.5rem;">
+            <a href="Services/index.html" class="btn-ghost">
+                View All Services &amp; Pricing <i class="fa-solid fa-arrow-right" style="font-size:.72rem;"></i>
+            </a>
+        </div>
+
+    </div>
+</section>
+
+
+<!-- ═══════════════════════════════
+     WHY US
+═══════════════════════════════ -->
+<div class="s-divider"></div>
+<section class="section">
+    <div class="section-inner" style="max-width:960px;">
+        <div class="reveal" style="text-align:center;">
+            <p class="section-label">Why Choose Us</p>
+            <h2 class="section-title">Built Different. Built Local.</h2>
+        </div>
+        <div class="why-grid">
+            <div class="reveal">
+                <div class="why-icon"><i class="fa-solid fa-bolt"></i></div>
+                <div class="why-title">Lightning Fast</div>
+                <p class="why-body">Optimised for Core Web Vitals — visitors stay and Google rewards you.</p>
+            </div>
+            <div class="reveal" style="transition-delay:80ms;">
+                <div class="why-icon"><i class="fa-solid fa-mobile-screen"></i></div>
+                <div class="why-title">Mobile First</div>
+                <p class="why-body">Every site is built for phones first — where most of your customers are.</p>
+            </div>
+            <div class="reveal" style="transition-delay:160ms;">
+                <div class="why-icon"><i class="fa-solid fa-handshake"></i></div>
+                <div class="why-title">Local &amp; Personal</div>
+                <p class="why-body">Right here in Salmon Arm — real people, real support, no runaround.</p>
+            </div>
+            <div class="reveal" style="transition-delay:240ms;">
+                <div class="why-icon"><i class="fa-solid fa-tags"></i></div>
+                <div class="why-title">Fair Pricing</div>
+                <p class="why-body">Transparent costs, no surprises. Great websites don't have to cost a fortune.</p>
+            </div>
+        </div>
+    </div>
+</section>
+
+
+<!-- ═══════════════════════════════
+     CTA BLOCK
+═══════════════════════════════ -->
+<div class="s-divider"></div>
+<section class="section">
+    <div class="section-inner">
+        <div class="mat-card cta-card reveal">
+            <div class="cta-emoji">✨</div>
+            <h2 class="cta-title">Ready to Launch?</h2>
+            <p class="cta-body">
+                Let's build something great together.<br>
+                We reply within 24 hours — reach out your way.
             </p>
-            
-            <div class="flex flex-col sm:flex-row gap-4 justify-center items-center mt-8">
-                <a href="#pricing" class="group relative px-8 py-4 bg-flare-600 rounded-full font-bold overflow-hidden shadow-[0_0_20px_rgba(245,158,11,0.4)] hover:shadow-[0_0_30px_rgba(245,158,11,0.6)] transition-all">
-                    <div class="absolute inset-0 w-full h-full bg-gradient-to-r from-transparent via-white/20 to-transparent -translate-x-full group-hover:animate-[shimmer_1s_infinite]"></div>
-                    <span class="relative flex items-center gap-2">
-                        See Pricing <i class="fa-solid fa-arrow-right group-hover:translate-x-1 transition-transform"></i>
-                    </span>
+            <div style="display:flex; flex-wrap:wrap; gap:.9rem; justify-content:center;">
+                <a class="btn-wa"
+                   href="https://wa.me/17785944591?text=Hi%20Visual%20Flares%20Studios!%20%F0%9F%91%8B%20I%20found%20your%20website%20and%20I%27m%20interested%20in%20your%20services.%20Can%20we%20chat%20about%20my%20project%3F">
+                    <i class="fa-brands fa-whatsapp" style="font-size:1.1rem;"></i>
+                    Say Hi on WhatsApp
                 </a>
-                <a href="#contact" class="px-8 py-4 border border-white/30 rounded-full font-bold hover:bg-white/10 hover:border-white transition-all backdrop-blur-sm">
-                    Contact Us
+                <a class="btn-email"
+                   href="mailto:support@visualflares.ca?subject=New%20Website%20Query&body=Hello%20Visual%20Flares%20Studios%20Team%2C%0A%0AI%20came%20across%20your%20website%20and%20I%27d%20love%20to%20learn%20more%20about%20your%20services.%0A%0A%E2%80%94%20MY%20DETAILS%20%E2%80%94%0AName%3A%20%0ABusiness%20Name%3A%20%0APhone%20Number%3A%20%0ACity%20%2F%20Town%3A%20%0A%0A%E2%80%94%20WHAT%20I%27M%20LOOKING%20FOR%20%E2%80%94%0A%5BDescribe%20your%20project%20or%20what%20you%20need%20help%20with%5D%0A%0A%E2%80%94%20BUDGET%20RANGE%20%E2%80%94%0A%5BYour%20estimated%20budget%5D%0A%0A%E2%80%94%20BEST%20TIME%20TO%20REACH%20ME%20%E2%80%94%0A%5Be.g.%20Weekday%20mornings%2C%20evenings%5D%0A%0ALooking%20forward%20to%20hearing%20from%20you%21%0A%0AKind%20regards">
+                    <i class="fa-solid fa-envelope" style="font-size:.88rem;"></i>
+                    Send Us an Email
                 </a>
             </div>
         </div>
-        
-        <!-- Scroll Indicator -->
-        <div class="absolute bottom-10 left-1/2 transform -translate-x-1/2 animate-bounce text-gray-400">
-            <i class="fa-solid fa-chevron-down text-2xl"></i>
-        </div>
-    </header>
+    </div>
+</section>
 
-    <!-- Services Section -->
-    <section id="services" class="py-24 relative z-10">
-        <div class="max-w-7xl mx-auto px-4">
-            <div class="text-center mb-16 reveal">
-                <h2 class="text-3xl md:text-5xl font-display font-bold mb-4">Core Services</h2>
-                <div class="h-1 w-20 bg-flare-500 mx-auto rounded-full"></div>
-            </div>
 
-            <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
-                <!-- Service 1 -->
-                <div class="glass-card p-8 rounded-2xl relative overflow-hidden group reveal">
-                    <div class="absolute top-0 right-0 p-4 opacity-10 group-hover:opacity-20 transition-opacity">
-                        <i class="fa-solid fa-laptop-code text-6xl"></i>
-                    </div>
-                    <h3 class="text-xl font-bold mb-2 text-flare-500">Web Design</h3>
-                    <div class="text-3xl font-display font-bold mb-4">$67<span class="text-sm text-gray-400 font-sans font-normal"> / One Time</span></div>
-                    <p class="text-gray-400 text-sm mb-4">Professional, responsive home page creation. Additional pages only $35.</p>
-                    <ul class="text-sm text-gray-300 space-y-2">
-                        <li><i class="fa-solid fa-check text-flare-500 mr-2"></i>Mobile Friendly</li>
-                        <li><i class="fa-solid fa-check text-flare-500 mr-2"></i>Super Fast</li>
-                    </ul>
-                </div>
+<!-- ═══════════════════════════════
+     FOOTER
+═══════════════════════════════ -->
+<footer>
+    <div class="footer-inner">
+        <a href="index.html" class="logo-lockup" style="opacity:.5;">
+            <img src="logo.png" alt="Visual Flares Studios" style="height:22px;">
+            <span class="brand-name" style="font-size:.78rem;">Visual<span class="hl">Flares</span></span>
+        </a>
+        <p class="footer-copy">&copy; 2025 Visual Flares Studios. All rights reserved.</p>
+        <p class="footer-made">
+            <i class="fa-brands fa-canadian-maple-leaf" style="color:#b91c1c;"></i>
+            Proudly built in Salmon Arm, BC, Canada
+        </p>
+    </div>
+</footer>
 
-                <!-- Service 2 -->
-                <div class="glass-card p-8 rounded-2xl relative overflow-hidden group reveal" style="transition-delay: 100ms;">
-                    <div class="absolute top-0 right-0 p-4 opacity-10 group-hover:opacity-20 transition-opacity">
-                        <i class="fa-solid fa-store text-6xl"></i>
-                    </div>
-                    <h3 class="text-xl font-bold mb-2 text-flare-500">E-Commerce</h3>
-                    <div class="text-3xl font-display font-bold mb-4">$211<span class="text-sm text-gray-400 font-sans font-normal"> / Setup</span></div>
-                    <p class="text-gray-400 text-sm mb-4">Full store setup to start selling your products online immediately.</p>
-                </div>
 
-                <!-- Service 3 -->
-                <div class="glass-card p-8 rounded-2xl relative overflow-hidden group reveal" style="transition-delay: 200ms;">
-                    <div class="absolute top-0 right-0 p-4 opacity-10 group-hover:opacity-20 transition-opacity">
-                        <i class="fa-solid fa-video text-6xl"></i>
-                    </div>
-                    <h3 class="text-xl font-bold mb-2 text-flare-500">AI Video Ads</h3>
-                    <div class="text-3xl font-display font-bold mb-4">$70<span class="text-sm text-gray-400 font-sans font-normal"> / Video</span></div>
-                    <p class="text-gray-400 text-sm mb-4">Engaging video advertisements created with cutting-edge AI technology.</p>
-                </div>
+<!-- ═══════════════════════════════
+     SCRIPTS
+═══════════════════════════════ -->
+<script>
+    // ── Spacer: match height of fixed top-bar ──
+    function syncSpacer() {
+        document.getElementById('top-spacer').style.height =
+            document.getElementById('top-bar').offsetHeight + 'px';
+    }
+    syncSpacer();
+    window.addEventListener('resize', syncSpacer);
+    window.addEventListener('load',   syncSpacer);
 
-                <!-- Service 4 -->
-                <div class="glass-card p-8 rounded-2xl relative overflow-hidden group reveal" style="transition-delay: 300ms;">
-                    <div class="absolute top-0 right-0 p-4 opacity-10 group-hover:opacity-20 transition-opacity">
-                        <i class="fa-solid fa-magnifying-glass-chart text-6xl"></i>
-                    </div>
-                    <h3 class="text-xl font-bold mb-2 text-flare-500">SEO Setup</h3>
-                    <div class="text-3xl font-display font-bold mb-4">$90<span class="text-sm text-gray-400 font-sans font-normal"> / Base</span></div>
-                    <p class="text-gray-400 text-sm mb-4">Get found on Google. Basic SEO setup to boost your local ranking.</p>
-                </div>
-            </div>
-        </div>
-    </section>
+    // ── Mobile menu toggle ──
+    const hamburger  = document.getElementById('hamburger-btn');
+    const mobileMenu = document.getElementById('mobile-menu');
+    const menuIcon   = document.getElementById('menu-icon');
 
-    <!-- Pricing Section -->
-    <section id="pricing" class="py-24 relative z-10">
-        <div class="max-w-7xl mx-auto px-4">
-            <div class="text-center mb-16 reveal">
-                <h2 class="text-3xl md:text-5xl font-display font-bold mb-4">Maintenance Packs</h2>
-                <p class="text-gray-300">Keep your site running at lightspeed.</p>
-            </div>
+    hamburger.addEventListener('click', () => {
+        const open = mobileMenu.classList.toggle('open');
+        hamburger.setAttribute('aria-expanded', String(open));
+        menuIcon.className = open ? 'fa-solid fa-xmark' : 'fa-solid fa-bars';
+    });
 
-            <div class="grid grid-cols-1 md:grid-cols-3 gap-8 items-center">
-                <!-- Silver -->
-                <div class="glass-card p-8 rounded-2xl reveal border-t-4 border-t-gray-400">
-                    <h3 class="text-2xl font-display font-bold text-gray-300">Silver</h3>
-                    <div class="my-4">
-                        <span class="text-4xl font-bold">$23</span><span class="text-gray-400">/mo</span>
-                    </div>
-                    <ul class="space-y-4 mb-8 text-sm text-gray-300">
-                        <li class="flex items-start"><i class="fa-solid fa-check text-green-400 mt-1 mr-3"></i> Hosting & Domain Fees Included</li>
-                        <li class="flex items-start"><i class="fa-solid fa-check text-green-400 mt-1 mr-3"></i> 1 Minor Update / Year</li>
-                        <li class="flex items-start"><i class="fa-solid fa-check text-green-400 mt-1 mr-3"></i> Uptime Monitoring</li>
-                    </ul>
-                    <a href="#contact" class="block text-center w-full py-3 border border-gray-500 rounded-lg hover:bg-gray-800 transition-colors">Choose Silver</a>
-                </div>
-
-                <!-- Diamond (Highlighted) -->
-                <div class="glass-card p-10 rounded-2xl reveal relative transform md:-translate-y-4 border-t-4 border-t-flare-500 shadow-[0_0_40px_rgba(245,158,11,0.15)] bg-black/40">
-                    <div class="absolute top-0 left-1/2 transform -translate-x-1/2 -translate-y-1/2 bg-flare-600 text-white px-4 py-1 rounded-full text-xs font-bold tracking-widest uppercase">
-                        Best Value
-                    </div>
-                    <h3 class="text-3xl font-display font-bold text-flare-500">Diamond</h3>
-                    <div class="my-6">
-                        <span class="text-5xl font-bold text-white">$93</span><span class="text-gray-400">/mo</span>
-                    </div>
-                    <ul class="space-y-4 mb-8 text-sm text-gray-200">
-                        <li class="flex items-start"><i class="fa-solid fa-check text-flare-500 mt-1 mr-3"></i> <strong>Hosting & Domain Included</strong></li>
-                        <li class="flex items-start"><i class="fa-solid fa-check text-flare-500 mt-1 mr-3"></i> <strong>1 Minor Update / Month</strong></li>
-                        <li class="flex items-start"><i class="fa-solid fa-check text-flare-500 mt-1 mr-3"></i> 14% Discount on Add-ons</li>
-                        <li class="flex items-start"><i class="fa-solid fa-check text-flare-500 mt-1 mr-3"></i> Priority Support (12hr)</li>
-                        <li class="flex items-start"><i class="fa-solid fa-wand-magic-sparkles text-flare-500 mt-1 mr-3"></i> <strong>Free Redesign Every 13 Months</strong></li>
-                        <li class="flex items-start"><i class="fa-solid fa-envelope text-flare-500 mt-1 mr-3"></i> 3 Custom Email Addresses</li>
-                    </ul>
-                    <a href="#contact" class="block text-center w-full py-4 bg-flare-600 text-white font-bold rounded-lg hover:bg-flare-500 transition-colors shadow-lg">Choose Diamond</a>
-                </div>
-
-                <!-- Gold -->
-                <div class="glass-card p-8 rounded-2xl reveal border-t-4 border-t-yellow-400">
-                    <h3 class="text-2xl font-display font-bold text-yellow-400">Gold</h3>
-                    <div class="my-4">
-                        <span class="text-4xl font-bold">$54</span><span class="text-gray-400">/mo</span>
-                    </div>
-                    <ul class="space-y-4 mb-8 text-sm text-gray-300">
-                        <li class="flex items-start"><i class="fa-solid fa-check text-yellow-400 mt-1 mr-3"></i> Hosting & Domain Included</li>
-                        <li class="flex items-start"><i class="fa-solid fa-check text-yellow-400 mt-1 mr-3"></i> 1 Minor Update / Month</li>
-                        <li class="flex items-start"><i class="fa-solid fa-check text-yellow-400 mt-1 mr-3"></i> 7% Discount on Add-ons</li>
-                        <li class="flex items-start"><i class="fa-solid fa-check text-yellow-400 mt-1 mr-3"></i> Priority Support (24hr)</li>
-                        <li class="flex items-start"><i class="fa-solid fa-wand-magic-sparkles text-yellow-400 mt-1 mr-3"></i> Free Redesign Every 24 Months</li>
-                    </ul>
-                    <a href="#contact" class="block text-center w-full py-3 border border-yellow-400 text-yellow-400 rounded-lg hover:bg-yellow-400/10 transition-colors">Choose Gold</a>
-                </div>
-            </div>
-        </div>
-    </section>
-
-    <!-- Location & Contact -->
-    <section id="contact" class="py-24 relative z-10">
-        <div class="max-w-4xl mx-auto px-4">
-            <div class="glass-card rounded-3xl p-8 md:p-12 text-center reveal">
-                <h2 class="text-3xl font-display font-bold mb-8">Ready to Launch?</h2>
-                <div class="grid md:grid-cols-2 gap-12 text-left">
-                    <div>
-                        <h4 class="text-flare-500 font-bold uppercase tracking-wider mb-4 text-sm">Location</h4>
-                        <p class="text-xl font-light mb-1">791, Okanagan Avenue East</p>
-                        <p class="text-xl font-light">Salmon Arm, BC</p>
-                        
-                        <div class="mt-8">
-                            <h4 class="text-flare-500 font-bold uppercase tracking-wider mb-4 text-sm">Contact</h4>
-                            <p class="mb-2"><a href="mailto:support@visualflares.ca" class="hover:text-flare-500 transition-colors text-lg"><i class="fa-solid fa-envelope mr-3"></i>support@visualflares.ca</a></p>
-                            <p><a href="https://www.visualflares.ca" class="hover:text-flare-500 transition-colors text-lg"><i class="fa-solid fa-globe mr-3"></i>www.visualflares.ca</a></p>
-                        </div>
-                    </div>
-                    
-                    <form class="space-y-4">
-                        <div>
-                            <label class="block text-xs uppercase tracking-wide text-gray-400 mb-2">Name</label>
-                            <input type="text" class="w-full bg-black/30 border border-gray-600 rounded p-3 text-white focus:border-flare-500 focus:outline-none focus:ring-1 focus:ring-flare-500 transition-colors" placeholder="Your Name">
-                        </div>
-                        <div>
-                            <label class="block text-xs uppercase tracking-wide text-gray-400 mb-2">Email</label>
-                            <input type="email" class="w-full bg-black/30 border border-gray-600 rounded p-3 text-white focus:border-flare-500 focus:outline-none focus:ring-1 focus:ring-flare-500 transition-colors" placeholder="email@address.com">
-                        </div>
-                        <button type="button" class="w-full bg-gradient-to-r from-flare-600 to-orange-600 hover:from-flare-500 hover:to-orange-500 text-white font-bold py-4 rounded shadow-lg transform hover:-translate-y-1 transition-all">
-                            Start Your Project
-                        </button>
-                    </form>
-                </div>
-            </div>
-        </div>
-    </section>
-
-    <!-- Footer -->
-    <footer class="relative z-10 py-8 border-t border-white/10 bg-black/80 backdrop-blur-md">
-        <div class="max-w-7xl mx-auto px-4 flex flex-col md:flex-row justify-between items-center gap-4">
-            <div class="text-sm text-gray-500">
-                &copy; 2023 Visual Flares Studios. All rights reserved.
-            </div>
-            <div class="flex items-center gap-2 text-sm text-gray-400">
-                <i class="fa-brands fa-canadian-maple-leaf text-red-500"></i> Proudly built in Canada
-            </div>
-        </div>
-    </footer>
-
-    <!-- Scripts -->
-    <script>
-        // 1. Scroll Reveal Animation
-        function reveal() {
-            var reveals = document.querySelectorAll(".reveal");
-            for (var i = 0; i < reveals.length; i++) {
-                var windowHeight = window.innerHeight;
-                var elementTop = reveals[i].getBoundingClientRect().top;
-                var elementVisible = 100;
-                if (elementTop < windowHeight - elementVisible) {
-                    reveals[i].classList.add("active");
-                }
-            }
-        }
-        window.addEventListener("scroll", reveal);
-        // Trigger once on load
-        reveal();
-
-        // 2. Custom "Visual Flare" Click Effect
-        document.addEventListener('click', function(e) {
-            // Don't trigger on buttons/links to avoid visual clutter
-            if (e.target.closest('a') || e.target.closest('button') || e.target.closest('input')) return;
-
-            const flare = document.createElement('div');
-            flare.classList.add('click-flare');
-            
-            // Set position
-            flare.style.left = e.pageX + 'px';
-            flare.style.top = e.pageY + 'px';
-            
-            // Randomize slight hue rotation for personality
-            const hueRotate = Math.random() * 20 - 10;
-            flare.style.filter = `hue-rotate(${hueRotate}deg)`;
-
-            document.body.appendChild(flare);
-
-            // Clean up DOM after animation
-            setTimeout(() => {
-                flare.remove();
-            }, 600);
+    mobileMenu.querySelectorAll('a').forEach(link => {
+        link.addEventListener('click', () => {
+            mobileMenu.classList.remove('open');
+            menuIcon.className = 'fa-solid fa-bars';
+            hamburger.setAttribute('aria-expanded', 'false');
         });
+    });
 
-        // 3. Navbar Frosted Glass Effect on Scroll
-        const navbar = document.getElementById('navbar');
-        window.addEventListener('scroll', () => {
-            if (window.scrollY > 50) {
-                navbar.classList.add('py-2');
-                navbar.classList.remove('p-4');
-            } else {
-                navbar.classList.add('p-4');
-                navbar.classList.remove('py-2');
-            }
+    // ── Scroll reveal ──
+    function revealCheck() {
+        document.querySelectorAll('.reveal').forEach(el => {
+            if (el.getBoundingClientRect().top < window.innerHeight - 70)
+                el.classList.add('active');
         });
-    </script>
+    }
+    window.addEventListener('scroll', revealCheck, { passive: true });
+    revealCheck();
+
+    // ── Click flare ──
+    document.addEventListener('click', e => {
+        if (e.target.closest('a, button, input')) return;
+        const f = document.createElement('div');
+        f.className = 'click-flare';
+        f.style.left = e.clientX + 'px';
+        f.style.top  = e.clientY + 'px';
+        document.body.appendChild(f);
+        setTimeout(() => f.remove(), 600);
+    });
+</script>
 </body>
 </html>
