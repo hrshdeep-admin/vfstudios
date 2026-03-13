@@ -1,0 +1,976 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Pricing | Visual Flares Studios</title>
+    <meta name="description" content="Visual Flares Studios — Transparent, flat-rate pricing for web design, maintenance plans and add-on services. No surprises, ever.">
+
+    <!-- Preload logo -->
+    <link rel="preload" href="../logo.png" as="image" type="image/png">
+
+    <!-- Google Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@300;400;600;700;800&family=Orbitron:wght@400;700;900&display=swap" rel="stylesheet">
+
+    <!-- Icons -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+
+    <style>
+    /* ═══════════════════════════════════════
+       RESET & BASE
+    ═══════════════════════════════════════ */
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+    :root {
+        --bg:       #1d1d1f;
+        --bg-card:  #252527;
+        --bg-deep:  #141416;
+        --border:   #333336;
+        --amber:    #f59e0b;
+        --amber-d:  #d97706;
+        --text:     #e8e8ea;
+        --muted:    #6b6b6e;
+    }
+
+    html { scroll-behavior: smooth; }
+
+    body {
+        background: var(--bg);
+        color: var(--text);
+        font-family: 'Montserrat', sans-serif;
+        -webkit-font-smoothing: antialiased;
+        overflow-x: hidden;
+    }
+
+    /* ═══════════════════════════════════════
+       PROMO BANNER
+    ═══════════════════════════════════════ */
+    #promo-banner {
+        display: block;
+        text-decoration: none;
+        background: linear-gradient(90deg, #92400e, #d97706 35%, #f59e0b 55%, #d97706 80%, #92400e);
+        background-size: 300% 100%;
+        animation: banner-scroll 5s linear infinite;
+    }
+    #promo-banner:hover { filter: brightness(1.08); }
+    @keyframes banner-scroll {
+        0%   { background-position: 100% 0; }
+        100% { background-position: -200% 0; }
+    }
+    .banner-text {
+        max-width: 1280px; margin: 0 auto;
+        padding: .5rem 1.25rem;
+        text-align: center;
+        font-size: .78rem; font-weight: 700;
+        color: #000; letter-spacing: .02em; line-height: 1.5;
+    }
+    .banner-text strong { font-weight: 900; }
+    .banner-text .learn { text-decoration: underline; }
+    .banner-sub { font-size: .56rem; color: rgba(0,0,0,.45); display: block; margin-top: .15rem; }
+
+    /* ═══════════════════════════════════════
+       FIXED TOP-BAR
+    ═══════════════════════════════════════ */
+    #top-bar { position: fixed; top: 0; left: 0; right: 0; z-index: 50; }
+
+    #navbar {
+        background: rgba(20, 20, 22, 0.97);
+        border-bottom: 1px solid var(--border);
+        backdrop-filter: blur(10px);
+        -webkit-backdrop-filter: blur(10px);
+    }
+    .nav-inner {
+        max-width: 1280px; margin: 0 auto;
+        padding: 0 1.5rem; height: 60px;
+        display: flex; flex-direction: row;
+        align-items: center; justify-content: space-between;
+    }
+
+    .logo-lockup {
+        display: flex; flex-direction: row; align-items: center;
+        gap: 10px; text-decoration: none; flex-shrink: 0;
+    }
+    .logo-lockup img {
+        display: block; height: 32px; width: auto;
+        object-fit: contain; flex-shrink: 0; border-radius: 4px;
+    }
+    .brand-name {
+        font-family: 'Orbitron', sans-serif; font-size: 1rem; font-weight: 700;
+        color: #fff; letter-spacing: .1em; text-transform: uppercase;
+        white-space: nowrap; line-height: 1;
+    }
+    .brand-name .hl { color: var(--amber); }
+
+    @media (max-width: 360px) {
+        .logo-lockup img { height: 26px; }
+        .brand-name      { font-size: .8rem; }
+    }
+
+    #desktop-nav { display: none; }
+    @media (min-width: 768px) {
+        #desktop-nav   { display: flex; align-items: center; gap: 2rem; }
+        #hamburger-btn { display: none !important; }
+    }
+    .nav-link {
+        font-size: .8rem; font-weight: 600; letter-spacing: .04em;
+        color: #a0a0a3; text-decoration: none; transition: color .18s;
+    }
+    .nav-link:hover  { color: var(--amber); }
+    .nav-link.active { color: var(--amber); }
+
+    #hamburger-btn {
+        background: none; border: none; color: #fff;
+        font-size: 1.25rem; padding: .45rem; cursor: pointer;
+        display: flex; align-items: center; line-height: 1;
+    }
+
+    #mobile-menu { display: none; background: #141416; border-top: 1px solid var(--border); }
+    #mobile-menu.open { display: block; }
+    .mob-link {
+        display: block; padding: .8rem 1.5rem;
+        font-size: .88rem; font-weight: 600; color: #a0a0a3;
+        text-decoration: none; border-bottom: 1px solid var(--border);
+        transition: color .18s, background .18s;
+    }
+    .mob-link:hover  { color: var(--amber); background: rgba(245,158,11,.04); }
+    .mob-link.active { color: var(--amber); }
+
+    /* ═══════════════════════════════════════
+       BUTTONS
+    ═══════════════════════════════════════ */
+    .btn-amber {
+        display: inline-flex; align-items: center; gap: .5rem;
+        padding: .65rem 1.4rem;
+        background: var(--amber-d); color: #fff;
+        border-radius: 9999px; font-weight: 700; font-size: .82rem;
+        text-decoration: none;
+        transition: background .2s, transform .2s, box-shadow .2s;
+        white-space: nowrap;
+    }
+    .btn-amber:hover { background: var(--amber); transform: translateY(-2px); box-shadow: 0 5px 16px rgba(245,158,11,.35); }
+
+    .btn-wa {
+        display: inline-flex; align-items: center; gap: .6rem;
+        padding: .9rem 1.9rem;
+        background: #25d366; color: #fff;
+        border-radius: 9999px; font-weight: 700; font-size: .9rem;
+        text-decoration: none; white-space: nowrap;
+        box-shadow: 0 4px 18px rgba(37,211,102,.2);
+        transition: background .2s, transform .2s, box-shadow .2s;
+    }
+    .btn-wa:hover { background: #1cb857; transform: translateY(-2px); box-shadow: 0 8px 24px rgba(37,211,102,.35); }
+
+    .btn-email {
+        display: inline-flex; align-items: center; gap: .6rem;
+        padding: .9rem 1.9rem;
+        background: transparent; color: var(--text);
+        border: 1.5px solid rgba(255,255,255,.22);
+        border-radius: 9999px; font-weight: 700; font-size: .9rem;
+        text-decoration: none; white-space: nowrap;
+        transition: background .2s, border-color .2s, transform .2s;
+    }
+    .btn-email:hover { background: rgba(255,255,255,.06); border-color: rgba(255,255,255,.45); transform: translateY(-2px); }
+
+    /* ═══════════════════════════════════════
+       PAGE HERO
+    ═══════════════════════════════════════ */
+    .page-hero {
+        padding: 5rem 1.25rem 4rem;
+        text-align: center;
+        position: relative; overflow: hidden;
+    }
+    .page-hero::before {
+        content: '';
+        position: absolute; top: 50%; left: 50%;
+        transform: translate(-50%, -50%);
+        width: min(700px, 110vw); height: 400px;
+        background: radial-gradient(ellipse at center,
+            rgba(245,158,11,.07) 0%, rgba(245,158,11,.03) 40%, transparent 70%);
+        pointer-events: none;
+    }
+    .page-hero::after {
+        content: '';
+        position: absolute; inset: 0;
+        background-image: radial-gradient(circle, rgba(255,255,255,.028) 1px, transparent 1px);
+        background-size: 28px 28px;
+        pointer-events: none;
+    }
+    .hero-accent-line {
+        position: absolute; top: 0; left: 0; right: 0; height: 1px;
+        background: linear-gradient(90deg, transparent, rgba(245,158,11,.4) 50%, transparent);
+    }
+    .page-hero-inner { position: relative; z-index: 2; max-width: 680px; margin: 0 auto; }
+
+    .hero-badge {
+        display: inline-block;
+        padding: .28rem 1.1rem;
+        border: 1px solid rgba(245,158,11,.3); border-radius: 9999px;
+        font-size: .68rem; font-weight: 700; letter-spacing: .12em; text-transform: uppercase;
+        color: var(--amber); background: rgba(245,158,11,.06);
+        margin-bottom: 1.4rem;
+    }
+    .page-title {
+        font-family: 'Orbitron', sans-serif;
+        font-size: clamp(2rem, 7vw, 3.6rem);
+        font-weight: 900; line-height: 1.1; color: #fff;
+        text-shadow: 0 0 60px rgba(245,158,11,.2);
+        margin-bottom: 1.2rem;
+    }
+    .page-title .grad {
+        background: linear-gradient(105deg, #fb923c 0%, #f59e0b 45%, #fcd34d 100%);
+        -webkit-background-clip: text; -webkit-text-fill-color: transparent; background-clip: text;
+    }
+    .page-sub {
+        font-size: clamp(.85rem, 2vw, 1rem); color: var(--muted);
+        max-width: 480px; margin: 0 auto;
+        font-weight: 300; line-height: 1.85;
+    }
+
+    /* ═══════════════════════════════════════
+       LAYOUT UTILS
+    ═══════════════════════════════════════ */
+    .s-divider { height: 1px; background: linear-gradient(90deg, transparent, var(--border) 25%, var(--border) 75%, transparent); }
+    .section { padding: 5rem 1.25rem; }
+    .section-inner { max-width: 1280px; margin: 0 auto; }
+    .section-label { font-size: .65rem; font-weight: 700; letter-spacing: .15em; color: var(--amber); text-transform: uppercase; margin-bottom: .55rem; }
+    .section-title { font-family: 'Orbitron', sans-serif; font-size: clamp(1.5rem, 3.5vw, 2.2rem); font-weight: 700; color: #fff; margin-bottom: .9rem; }
+    .accent-bar { height: 3px; width: 50px; background: var(--amber); border-radius: 4px; }
+    .accent-bar.centered { margin: 0 auto; }
+
+    /* ═══════════════════════════════════════
+       MAT CARD
+    ═══════════════════════════════════════ */
+    .mat-card {
+        background: var(--bg-card); border: 1px solid var(--border); border-radius: 1rem;
+        transition: transform .25s ease, box-shadow .25s ease, border-color .25s ease, background .25s ease;
+    }
+    .mat-card:hover { transform: translateY(-4px); background: #2a2a2c; box-shadow: 0 14px 32px -8px rgba(245,158,11,.14); border-color: rgba(245,158,11,.3); }
+
+    /* ═══════════════════════════════════════
+       SECTION 1 — WEBSITE CREATION
+    ═══════════════════════════════════════ */
+    .creation-grid {
+        display: grid;
+        grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+        gap: 1.4rem;
+        margin-top: 2.8rem;
+    }
+    .price-card {
+        padding: 2.2rem 2rem;
+        display: flex; flex-direction: column; gap: .5rem;
+    }
+    .price-tag {
+        display: flex; align-items: flex-start; gap: .2rem;
+        margin-bottom: .6rem;
+    }
+    .price-currency {
+        font-family: 'Orbitron', sans-serif;
+        font-size: 1.1rem; font-weight: 700; color: var(--amber);
+        padding-top: .45rem;
+    }
+    .price-amount {
+        font-family: 'Orbitron', sans-serif;
+        font-size: 3.2rem; font-weight: 900; color: var(--amber);
+        line-height: 1;
+    }
+    .price-period {
+        font-size: .72rem; color: var(--muted); font-weight: 600;
+        align-self: flex-end; padding-bottom: .5rem; letter-spacing: .04em;
+    }
+    .price-name {
+        font-weight: 700; font-size: 1rem; color: #fff; margin-bottom: .3rem;
+    }
+    .price-desc {
+        font-size: .8rem; color: #707074; line-height: 1.7; margin-bottom: 1rem; flex: 1;
+    }
+    .feature-list {
+        list-style: none; font-size: .78rem; color: #9a9a9d;
+        display: flex; flex-direction: column; gap: .45rem;
+    }
+    .feature-list li { display: flex; align-items: flex-start; gap: .55rem; }
+    .feature-list li i { color: var(--amber); font-size: .68rem; margin-top: .25em; flex-shrink: 0; }
+
+    /* ═══════════════════════════════════════
+       SECTION 2 — MAINTENANCE PACKS
+    ═══════════════════════════════════════ */
+    .packs-grid {
+        display: grid;
+        grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+        gap: 1.6rem;
+        margin-top: 2.8rem;
+        align-items: start;
+    }
+    .pack-card {
+        padding: 2.2rem 2rem;
+        display: flex; flex-direction: column;
+        position: relative; overflow: hidden;
+    }
+    .pack-badge {
+        display: inline-flex; align-items: center; gap: .45rem;
+        font-size: .6rem; font-weight: 700; letter-spacing: .12em; text-transform: uppercase;
+        padding: .22rem .75rem; border-radius: 9999px;
+        margin-bottom: 1rem; width: fit-content;
+    }
+    .badge-silver { background: rgba(192,192,192,.1); color: #c0c0c0; border: 1px solid rgba(192,192,192,.2); }
+    .badge-gold   { background: rgba(245,158,11,.1);  color: var(--amber); border: 1px solid rgba(245,158,11,.25); }
+    .badge-diamond{ background: rgba(99,179,237,.1);  color: #63b3ed; border: 1px solid rgba(99,179,237,.25); }
+
+    .pack-name {
+        font-family: 'Orbitron', sans-serif;
+        font-size: 1rem; font-weight: 700; color: #fff;
+        margin-bottom: .2rem;
+    }
+    .pack-price-row {
+        display: flex; align-items: flex-end; gap: .3rem;
+        margin-bottom: 1.2rem;
+    }
+    .pack-dollar { font-family: 'Orbitron', sans-serif; font-size: .95rem; font-weight: 700; color: var(--amber); padding-bottom: .6rem; }
+    .pack-amount { font-family: 'Orbitron', sans-serif; font-size: 2.8rem; font-weight: 900; color: var(--amber); line-height: 1; }
+    .pack-mo     { font-size: .72rem; color: var(--muted); font-weight: 600; padding-bottom: .45rem; }
+
+    .pack-features {
+        list-style: none; font-size: .79rem; color: #9a9a9d;
+        display: flex; flex-direction: column; gap: .55rem; flex: 1;
+    }
+    .pack-features li { display: flex; align-items: flex-start; gap: .6rem; }
+    .pack-features li i { color: var(--amber); font-size: .72rem; margin-top: .22em; flex-shrink: 0; }
+
+    /* featured gold card */
+    .pack-card.featured {
+        border-color: rgba(245,158,11,.35) !important;
+        background: linear-gradient(140deg, #27271f 0%, #252520 100%) !important;
+    }
+    .popular-ribbon {
+        position: absolute; top: 16px; right: -28px;
+        background: var(--amber-d); color: #fff;
+        font-size: .55rem; font-weight: 800; letter-spacing: .1em; text-transform: uppercase;
+        padding: .25rem 2.5rem; transform: rotate(45deg);
+    }
+
+    /* ═══════════════════════════════════════
+       SECTION 3 — ADD-ONS
+    ═══════════════════════════════════════ */
+    .addons-table {
+        width: 100%; margin-top: 2.8rem;
+        border-collapse: collapse; border-radius: 1rem; overflow: hidden;
+    }
+    .addons-table thead tr {
+        background: var(--bg-deep);
+        border-bottom: 2px solid rgba(245,158,11,.25);
+    }
+    .addons-table thead th {
+        padding: 1rem 1.4rem; text-align: left;
+        font-size: .65rem; font-weight: 700; letter-spacing: .12em;
+        color: var(--amber); text-transform: uppercase;
+    }
+    .addons-table thead th:last-child { text-align: right; }
+    .addons-table tbody tr {
+        border-bottom: 1px solid var(--border);
+        transition: background .18s;
+    }
+    .addons-table tbody tr:last-child { border-bottom: none; }
+    .addons-table tbody tr:hover { background: rgba(245,158,11,.03); }
+    .addons-table tbody td {
+        padding: 1.1rem 1.4rem; vertical-align: top;
+    }
+    .addon-row-icon {
+        display: inline-flex; align-items: center; justify-content: center;
+        width: 36px; height: 36px; border-radius: 50%;
+        background: rgba(245,158,11,.08); border: 1px solid rgba(245,158,11,.16);
+        color: var(--amber); font-size: .85rem; flex-shrink: 0;
+    }
+    .addon-row-name  { font-weight: 700; font-size: .88rem; color: var(--text); margin-bottom: .2rem; }
+    .addon-row-desc  { font-size: .76rem; color: var(--muted); line-height: 1.6; }
+    .addon-row-price {
+        text-align: right; white-space: nowrap;
+        font-family: 'Orbitron', sans-serif;
+        font-size: 1.25rem; font-weight: 700; color: var(--amber);
+    }
+    .addon-row-price .price-sub {
+        display: block; font-family: 'Montserrat', sans-serif;
+        font-size: .6rem; font-weight: 600; color: var(--muted);
+        text-transform: uppercase; letter-spacing: .06em; margin-top: .15rem;
+    }
+    .price-talk {
+        font-family: 'Orbitron', sans-serif;
+        font-size: .85rem; font-weight: 700; color: var(--amber);
+    }
+
+    /* Mobile: stack table as cards */
+    @media (max-width: 600px) {
+        .addons-table, .addons-table thead, .addons-table tbody,
+        .addons-table tr, .addons-table th, .addons-table td { display: block; }
+        .addons-table thead { display: none; }
+        .addons-table tbody tr {
+            background: var(--bg-card); border: 1px solid var(--border);
+            border-radius: .75rem; margin-bottom: .9rem; padding: 1.1rem 1.2rem;
+        }
+        .addons-table tbody td { padding: .4rem 0; border: none; }
+        .addon-row-price { text-align: left; margin-top: .5rem; }
+    }
+
+    /* ═══════════════════════════════════════
+       SUMMARY STRIP
+    ═══════════════════════════════════════ */
+    .summary-strip {
+        background: var(--bg-deep);
+        border-top: 1px solid var(--border);
+        border-bottom: 1px solid var(--border);
+    }
+    .summary-grid {
+        max-width: 1280px; margin: 0 auto;
+        padding: 1.8rem 1.25rem;
+        display: grid;
+        grid-template-columns: repeat(auto-fit, minmax(140px, 1fr));
+        gap: 1rem; text-align: center;
+    }
+    .sum-label { font-size: .58rem; color: var(--muted); margin-bottom: .3rem; text-transform: uppercase; letter-spacing: .08em; }
+    .sum-val   { font-family: 'Orbitron', sans-serif; font-size: 1.5rem; font-weight: 700; color: var(--amber); line-height: 1; }
+    .sum-sub   { font-size: .62rem; color: #484848; margin-top: .25rem; }
+
+    /* ═══════════════════════════════════════
+       CTA BLOCK
+    ═══════════════════════════════════════ */
+    .cta-card {
+        max-width: 640px; margin: 0 auto;
+        padding: 3.2rem 2.2rem; text-align: center;
+        border-color: rgba(245,158,11,.16) !important;
+        background: linear-gradient(135deg, #222224 0%, #282828 100%) !important;
+    }
+    .cta-emoji { font-size: 2rem; margin-bottom: .9rem; line-height: 1; }
+    .cta-title { font-family: 'Orbitron', sans-serif; font-size: clamp(1.3rem, 3.5vw, 1.85rem); font-weight: 700; color: #fff; margin-bottom: .75rem; }
+    .cta-body  { color: var(--muted); font-size: .87rem; line-height: 1.75; margin-bottom: 2.2rem; }
+
+    /* ═══════════════════════════════════════
+       FOOTER
+    ═══════════════════════════════════════ */
+    footer { border-top: 1px solid var(--border); background: var(--bg-deep); padding: 2.2rem 1.25rem; }
+    .footer-inner { max-width: 1280px; margin: 0 auto; display: flex; flex-direction: column; align-items: center; gap: .85rem; text-align: center; }
+    .footer-copy { font-size: .73rem; color: #484848; }
+    .footer-made { font-size: .68rem; color: #363638; }
+
+    /* ═══════════════════════════════════════
+       SCROLL REVEAL
+    ═══════════════════════════════════════ */
+    .reveal { opacity: 0; transform: translateY(18px); transition: opacity .65s ease, transform .65s ease; }
+    .reveal.active { opacity: 1; transform: translateY(0); }
+
+    /* ═══════════════════════════════════════
+       CLICK FLARE
+    ═══════════════════════════════════════ */
+    .click-flare {
+        position: fixed; pointer-events: none; z-index: 9999;
+        border-radius: 50%; width: 56px; height: 56px;
+        background: radial-gradient(circle, rgba(245,158,11,.8) 0%, transparent 70%);
+        transform: translate(-50%,-50%) scale(0);
+        animation: flare .55s ease-out forwards;
+    }
+    @keyframes flare {
+        0%   { transform: translate(-50%,-50%) scale(0); opacity: 1; }
+        100% { transform: translate(-50%,-50%) scale(3.2); opacity: 0; }
+    }
+
+    /* ═══════════════════════════════════════
+       FAQ / NOTE
+    ═══════════════════════════════════════ */
+    .faq-note {
+        background: rgba(245,158,11,.04);
+        border: 1px solid rgba(245,158,11,.12);
+        border-radius: .75rem;
+        padding: 1.4rem 1.6rem;
+        font-size: .8rem; color: var(--muted); line-height: 1.72;
+        display: flex; gap: .9rem; align-items: flex-start;
+        margin-top: 2.2rem;
+    }
+    .faq-note i { color: var(--amber); font-size: 1rem; flex-shrink: 0; margin-top: .1rem; }
+    </style>
+</head>
+<body>
+
+<!-- ═══════════════════════════════
+     TOP BAR (fixed)
+═══════════════════════════════ -->
+<div id="top-bar">
+
+    <a id="promo-banner" href="../Contact/index.html">
+        <div class="banner-text">
+            🔥 LIMITED TIME — Pick Your Own Price! Monthly maintenance from just <strong>$10/mo</strong>. Act fast!
+            <span class="learn">Learn More →</span>
+            <span class="banner-sub">*Terms &amp; conditions apply. Limited availability.</span>
+        </div>
+    </a>
+
+    <nav id="navbar">
+        <div class="nav-inner">
+
+            <a href="../index.html" class="logo-lockup">
+                <img src="../logo.png" alt="Visual Flares Studios logo">
+                <span class="brand-name">Visual<span class="hl">Flares</span></span>
+            </a>
+
+            <div id="desktop-nav">
+                <a href="../services/index.html" class="nav-link">Services</a>
+                <a href="../pricing/index.html"  class="nav-link active">Pricing</a>
+                <a href="../about/index.html"    class="nav-link">About</a>
+                <a href="../contact/index.html"  class="btn-amber">Let's Talk</a>
+            </div>
+
+            <button id="hamburger-btn" aria-label="Toggle menu" aria-expanded="false" aria-controls="mobile-menu">
+                <i class="fa-solid fa-bars" id="menu-icon"></i>
+            </button>
+        </div>
+
+        <div id="mobile-menu">
+            <div style="max-width:1280px; margin:0 auto;">
+                <a href="../services/index.html" class="mob-link">Services</a>
+                <a href="../pricing/index.html"  class="mob-link active">Pricing</a>
+                <a href="../about/index.html"    class="mob-link">About</a>
+                <div style="padding:.85rem 1.5rem;">
+                    <a href="../Contact/index.html" class="btn-amber" style="width:100%; justify-content:center; padding:.85rem;">
+                        Let's Talk
+                    </a>
+                </div>
+            </div>
+        </div>
+    </nav>
+
+</div>
+<div id="top-spacer"></div>
+
+
+<!-- ═══════════════════════════════
+     PAGE HERO
+═══════════════════════════════ -->
+<header class="page-hero">
+    <div class="hero-accent-line"></div>
+    <div class="page-hero-inner">
+        <div class="reveal" style="margin-bottom:1.2rem;">
+            <span class="hero-badge">Transparent &amp; Flat-Rate</span>
+        </div>
+        <h1 class="page-title reveal" style="transition-delay:.06s;">
+            SIMPLE <span class="grad">PRICING</span>
+        </h1>
+        <p class="page-sub reveal" style="transition-delay:.12s;">
+            No hidden fees, no surprise invoices. What you see is what you pay —
+            straightforward pricing that works for small businesses.
+        </p>
+    </div>
+</header>
+
+
+<!-- ═══════════════════════════════
+     QUICK STATS STRIP
+═══════════════════════════════ -->
+<div class="summary-strip">
+    <div class="summary-grid">
+        <div class="reveal">
+            <div class="sum-label">Website from</div>
+            <div class="sum-val">$67</div>
+            <div class="sum-sub">One-time</div>
+        </div>
+        <div class="reveal" style="transition-delay:60ms;">
+            <div class="sum-label">Maintenance from</div>
+            <div class="sum-val">$23</div>
+            <div class="sum-sub">Per month</div>
+        </div>
+        <div class="reveal" style="transition-delay:120ms;">
+            <div class="sum-label">Add-ons from</div>
+            <div class="sum-val">$3</div>
+            <div class="sum-sub">Per month</div>
+        </div>
+        <div class="reveal" style="transition-delay:180ms;">
+            <div class="sum-label">Hidden Fees</div>
+            <div class="sum-val">$0</div>
+            <div class="sum-sub">Ever</div>
+        </div>
+    </div>
+</div>
+
+
+<!-- ═══════════════════════════════
+     SECTION 1 — WEBSITE CREATION
+═══════════════════════════════ -->
+<section class="section">
+    <div class="section-inner">
+
+        <div class="reveal">
+            <p class="section-label">One-Time Fee</p>
+            <h2 class="section-title">Website Creation</h2>
+            <div class="accent-bar" style="margin-bottom:1rem;"></div>
+            <p style="font-size:.84rem; color:var(--muted); max-width:540px; line-height:1.75;">
+                Pay once, own it forever. All website creation prices are a single one-time charge —
+                no recurring fees unless you choose a maintenance plan.
+            </p>
+        </div>
+
+        <div class="creation-grid">
+
+            <!-- Home Page -->
+            <div class="mat-card price-card reveal" style="transition-delay:60ms;">
+                <div class="price-tag">
+                    <span class="price-currency">$</span>
+                    <span class="price-amount">67</span>
+                    <span class="price-period">one-time</span>
+                </div>
+                <div class="price-name">Home Page</div>
+                <p class="price-desc">
+                    Your complete, professional landing page. Built mobile-first with custom branding,
+                    on-page SEO and everything a visitor needs to trust and contact you.
+                </p>
+                <ul class="feature-list">
+                    <li><i class="fa-solid fa-check"></i> Custom design &amp; layout</li>
+                    <li><i class="fa-solid fa-check"></i> Mobile-first &amp; fast-loading</li>
+                    <li><i class="fa-solid fa-check"></i> On-page SEO included</li>
+                    <li><i class="fa-solid fa-check"></i> Contact &amp; call-to-action sections</li>
+                </ul>
+            </div>
+
+            <!-- Additional Pages -->
+            <div class="mat-card price-card reveal" style="transition-delay:120ms;">
+                <div class="price-tag">
+                    <span class="price-currency">$</span>
+                    <span class="price-amount">35</span>
+                    <span class="price-period">per page</span>
+                </div>
+                <div class="price-name">Additional Pages</div>
+                <p class="price-desc">
+                    Grow your site beyond the homepage. Add an About page, Services, Gallery, FAQ
+                    or anything else — each styled to match your brand perfectly.
+                </p>
+                <ul class="feature-list">
+                    <li><i class="fa-solid fa-check"></i> Consistent branding across all pages</li>
+                    <li><i class="fa-solid fa-check"></i> Individually SEO-optimised</li>
+                    <li><i class="fa-solid fa-check"></i> Fully mobile responsive</li>
+                    <li><i class="fa-solid fa-check"></i> Add more pages any time</li>
+                </ul>
+            </div>
+
+        </div>
+
+        <div class="faq-note reveal" style="transition-delay:180ms;">
+            <i class="fa-solid fa-circle-info"></i>
+            <span>
+                <strong style="color:var(--text);">Not sure how many pages you need?</strong>
+                Most small businesses start with a Home Page and 2–3 additional pages (About, Services, Contact).
+                That's a complete site for just <strong style="color:var(--amber);">$172</strong>.
+                We're happy to help you figure out what makes sense — just reach out.
+            </span>
+        </div>
+
+    </div>
+</section>
+
+
+<!-- ═══════════════════════════════
+     SECTION 2 — MAINTENANCE PACKS
+═══════════════════════════════ -->
+<div class="s-divider"></div>
+<section class="section">
+    <div class="section-inner">
+
+        <div class="reveal" style="text-align:center; margin-bottom:.5rem;">
+            <p class="section-label">Per Month</p>
+            <h2 class="section-title">Monthly Maintenance Packs</h2>
+            <div class="accent-bar centered" style="margin-bottom:1rem;"></div>
+            <p style="font-size:.84rem; color:var(--muted); max-width:540px; margin:0 auto; line-height:1.75;">
+                Keep your website healthy, secure and current every month.
+                All plans include hosting and domain fees — nothing extra to pay your host.
+            </p>
+        </div>
+
+        <div class="packs-grid">
+
+            <!-- SILVER -->
+            <div class="mat-card pack-card reveal" style="transition-delay:60ms;">
+                <span class="pack-badge badge-silver"><i class="fa-solid fa-circle"></i> Silver</span>
+                <div class="pack-name">Silver Pack</div>
+                <div class="pack-price-row">
+                    <span class="pack-dollar">$</span>
+                    <span class="pack-amount">23</span>
+                    <span class="pack-mo">/ month</span>
+                </div>
+                <ul class="pack-features">
+                    <li><i class="fa-solid fa-check"></i> Hosting &amp; domain fees included</li>
+                    <li><i class="fa-solid fa-check"></i> 1 minor website update per year</li>
+                    <li><i class="fa-solid fa-check"></i> Additional changes billed at standard rates</li>
+                    <li><i class="fa-solid fa-check"></i> Automatic uptime &amp; performance monitoring</li>
+                </ul>
+            </div>
+
+            <!-- GOLD -->
+            <div class="mat-card pack-card featured reveal" style="transition-delay:120ms;">
+                <div class="popular-ribbon">Popular</div>
+                <span class="pack-badge badge-gold"><i class="fa-solid fa-star"></i> Gold</span>
+                <div class="pack-name">Gold Pack</div>
+                <div class="pack-price-row">
+                    <span class="pack-dollar">$</span>
+                    <span class="pack-amount">54</span>
+                    <span class="pack-mo">/ month</span>
+                </div>
+                <ul class="pack-features">
+                    <li><i class="fa-solid fa-check"></i> Hosting &amp; domain fees included</li>
+                    <li><i class="fa-solid fa-check"></i> 1 minor website update per month</li>
+                    <li><i class="fa-solid fa-check"></i> Additional changes at a 7% discount on standard rates</li>
+                    <li><i class="fa-solid fa-check"></i> Automatic uptime &amp; performance monitoring</li>
+                    <li><i class="fa-solid fa-check"></i> Priority email support (24-hour response time)</li>
+                    <li><i class="fa-solid fa-check"></i> Fresh new look for your website every 24 months — free</li>
+                </ul>
+            </div>
+
+            <!-- DIAMOND -->
+            <div class="mat-card pack-card reveal" style="transition-delay:180ms;">
+                <span class="pack-badge badge-diamond"><i class="fa-solid fa-gem"></i> Diamond</span>
+                <div class="pack-name">Diamond Pack</div>
+                <div class="pack-price-row">
+                    <span class="pack-dollar">$</span>
+                    <span class="pack-amount">93</span>
+                    <span class="pack-mo">/ month</span>
+                </div>
+                <ul class="pack-features">
+                    <li><i class="fa-solid fa-check"></i> Hosting &amp; domain fees included</li>
+                    <li><i class="fa-solid fa-check"></i> 1 minor website update per month</li>
+                    <li><i class="fa-solid fa-check"></i> Additional changes at 14% below standard rates</li>
+                    <li><i class="fa-solid fa-check"></i> Automatic uptime &amp; performance monitoring</li>
+                    <li><i class="fa-solid fa-check"></i> Priority email support (12-hour response time)</li>
+                    <li><i class="fa-solid fa-check"></i> Fresh new look every 13 months — at no extra cost</li>
+                    <li><i class="fa-solid fa-check"></i> Up to 3 custom email addresses (yourname@yourdomain.com)</li>
+                </ul>
+            </div>
+
+        </div>
+
+        <div class="faq-note reveal" style="transition-delay:240ms;">
+            <i class="fa-solid fa-circle-info"></i>
+            <span>
+                <strong style="color:var(--text);">No maintenance plan yet?</strong>
+                That's fine — maintenance is optional. You can always add a plan later.
+                Individual updates and changes are available as one-off add-ons below.
+            </span>
+        </div>
+
+    </div>
+</section>
+
+
+<!-- ═══════════════════════════════
+     SECTION 3 — ADD-ONS
+═══════════════════════════════ -->
+<div class="s-divider"></div>
+<section class="section">
+    <div class="section-inner">
+
+        <div class="reveal" style="text-align:center; margin-bottom:.5rem;">
+            <p class="section-label">À La Carte</p>
+            <h2 class="section-title">Add-On Services</h2>
+            <div class="accent-bar centered" style="margin-bottom:1rem;"></div>
+            <p style="font-size:.84rem; color:var(--muted); max-width:540px; margin:0 auto; line-height:1.75;">
+                Power up your website or marketing with exactly what you need —
+                no bundles, no pressure.
+            </p>
+        </div>
+
+        <div class="reveal" style="transition-delay:60ms;">
+            <table class="addons-table">
+                <thead>
+                    <tr>
+                        <th style="width:56px;"></th>
+                        <th>Service</th>
+                        <th>Starting Price</th>
+                    </tr>
+                </thead>
+                <tbody>
+
+                    <tr>
+                        <td><span class="addon-row-icon"><i class="fa-solid fa-magnifying-glass-chart"></i></span></td>
+                        <td>
+                            <div class="addon-row-name">Basic SEO Setup</div>
+                            <div class="addon-row-desc">Technical on-page SEO — keyword mapping, meta tags, Google Business profile and a speed audit to boost your local rankings.</div>
+                        </td>
+                        <td>
+                            <div class="addon-row-price">
+                                $90
+                                <span class="price-sub">one-time</span>
+                            </div>
+                        </td>
+                    </tr>
+
+                    <tr>
+                        <td><span class="addon-row-icon"><i class="fa-solid fa-store"></i></span></td>
+                        <td>
+                            <div class="addon-row-name">E-Commerce Store Setup</div>
+                            <div class="addon-row-desc">Full online shop — product catalogue, secure checkout, payment gateway and order management. Ready to sell from day one.</div>
+                        </td>
+                        <td>
+                            <div class="addon-row-price">
+                                $211
+                                <span class="price-sub">one-time</span>
+                            </div>
+                        </td>
+                    </tr>
+
+                    <tr>
+                        <td><span class="addon-row-icon"><i class="fa-solid fa-envelope-open-text"></i></span></td>
+                        <td>
+                            <div class="addon-row-name">Custom Domain Email</div>
+                            <div class="addon-row-desc">A professional email address that matches your brand (yourname@company.ca) — builds trust with every message you send.</div>
+                        </td>
+                        <td>
+                            <div class="addon-row-price">
+                                $3
+                                <span class="price-sub">per month</span>
+                            </div>
+                        </td>
+                    </tr>
+
+                    <tr>
+                        <td><span class="addon-row-icon"><i class="fa-solid fa-pen-to-square"></i></span></td>
+                        <td>
+                            <div class="addon-row-name">Website Update (Minor Change)</div>
+                            <div class="addon-row-desc">Swap a photo, update a price, tweak some copy — one-off minor changes handled quickly with no commitment required.</div>
+                        </td>
+                        <td>
+                            <div class="addon-row-price">
+                                $23
+                                <span class="price-sub">per update</span>
+                            </div>
+                        </td>
+                    </tr>
+
+                    <tr>
+                        <td><span class="addon-row-icon"><i class="fa-solid fa-video"></i></span></td>
+                        <td>
+                            <div class="addon-row-name">AI Video Advertisement</div>
+                            <div class="addon-row-desc">Branded video ads with script, AI visuals and voiceover. Social-ready HD output optimised for Google Ads and Meta platforms.</div>
+                        </td>
+                        <td>
+                            <div class="addon-row-price">
+                                $70
+                                <span class="price-sub">per video</span>
+                            </div>
+                        </td>
+                    </tr>
+
+                    <tr>
+                        <td><span class="addon-row-icon"><i class="fa-solid fa-bullhorn"></i></span></td>
+                        <td>
+                            <div class="addon-row-name">Digital Marketing &amp; Promotions</div>
+                            <div class="addon-row-desc">Social campaigns, paid ads, local promotions — a fully custom strategy built around your goals and budget.</div>
+                        </td>
+                        <td>
+                            <div class="addon-row-price">
+                                <span class="price-talk">Let's Talk</span>
+                                <span class="price-sub">custom quote</span>
+                            </div>
+                        </td>
+                    </tr>
+
+                </tbody>
+            </table>
+        </div>
+
+        <div class="faq-note reveal" style="transition-delay:120ms;">
+            <i class="fa-solid fa-circle-info"></i>
+            <span>
+                <strong style="color:var(--text);">Prices shown are starting rates.</strong>
+                Final pricing may vary based on scope and complexity.
+                We'll always confirm the exact cost before any work begins — no surprises, ever.
+            </span>
+        </div>
+
+    </div>
+</section>
+
+
+<!-- ═══════════════════════════════
+     CTA BLOCK
+═══════════════════════════════ -->
+<div class="s-divider"></div>
+<section class="section">
+    <div class="section-inner">
+        <div class="mat-card cta-card reveal">
+            <div class="cta-emoji">✨</div>
+            <h2 class="cta-title">Ready to Launch?</h2>
+            <p class="cta-body">
+                Let's build something great together.<br>
+                We reply within 24 hours — reach out your way.
+            </p>
+            <div style="display:flex; flex-wrap:wrap; gap:.9rem; justify-content:center;">
+                <a class="btn-wa"
+                   href="https://wa.me/17785944591?text=Hi%20Visual%20Flares%20Studios!%20%F0%9F%91%8B%20I%20found%20your%20website%20and%20I%27m%20interested%20in%20your%20services.%20Can%20we%20chat%20about%20my%20project%3F">
+                    <i class="fa-brands fa-whatsapp" style="font-size:1.1rem;"></i>
+                    Say Hi on WhatsApp
+                </a>
+                <a class="btn-email" href="mailto:support@visualflares.ca">
+                    <i class="fa-solid fa-envelope" style="font-size:.88rem;"></i>
+                    Send Us an Email
+                </a>
+            </div>
+        </div>
+    </div>
+</section>
+
+
+<!-- ═══════════════════════════════
+     FOOTER
+═══════════════════════════════ -->
+<footer>
+    <div class="footer-inner">
+        <a href="../index.html" class="logo-lockup" style="opacity:.5;">
+            <img src="../logo.png" alt="Visual Flares Studios" style="height:22px;">
+            <span class="brand-name" style="font-size:.78rem;">Visual<span class="hl">Flares</span></span>
+        </a>
+        <p class="footer-copy">&copy; 2025 Visual Flares Studios. All rights reserved.</p>
+        <p class="footer-made">
+            <i class="fa-brands fa-canadian-maple-leaf" style="color:#b91c1c;"></i>
+            Proudly built in Salmon Arm, BC, Canada
+        </p>
+    </div>
+</footer>
+
+
+<!-- ═══════════════════════════════
+     SCRIPTS
+═══════════════════════════════ -->
+<script>
+    // ── Spacer: match height of fixed top-bar ──
+    function syncSpacer() {
+        document.getElementById('top-spacer').style.height =
+            document.getElementById('top-bar').offsetHeight + 'px';
+    }
+    syncSpacer();
+    window.addEventListener('resize', syncSpacer);
+
+    // ── Hamburger toggle ──
+    const hamburgerBtn = document.getElementById('hamburger-btn');
+    const mobileMenu   = document.getElementById('mobile-menu');
+    const menuIcon     = document.getElementById('menu-icon');
+    hamburgerBtn.addEventListener('click', () => {
+        const open = mobileMenu.classList.toggle('open');
+        hamburgerBtn.setAttribute('aria-expanded', open);
+        menuIcon.className = open ? 'fa-solid fa-xmark' : 'fa-solid fa-bars';
+    });
+
+    // ── Scroll reveal ──
+    const revealEls = document.querySelectorAll('.reveal');
+    const observer  = new IntersectionObserver((entries) => {
+        entries.forEach(e => {
+            if (e.isIntersecting) { e.target.classList.add('active'); observer.unobserve(e.target); }
+        });
+    }, { threshold: 0.1 });
+    revealEls.forEach(el => observer.observe(el));
+
+    // ── Click flare ──
+    document.addEventListener('click', e => {
+        const flare = document.createElement('div');
+        flare.className = 'click-flare';
+        flare.style.left = e.clientX + 'px';
+        flare.style.top  = e.clientY + 'px';
+        document.body.appendChild(flare);
+        flare.addEventListener('animationend', () => flare.remove());
+    });
+</script>
+
+</body>
+</html>
